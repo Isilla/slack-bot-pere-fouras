@@ -1,0 +1,18 @@
+nope:
+    - Relis bien l'énigme.
+    - Tu te fourvoies voyageur.
+    - Ceci n'est pas la bonne réponse.
+
+enigmes:
+    0 :
+        enigme: "Echelon suprême à l'Opéra\nJamais sous l'eau elle ne fila.\nBonne lorsqu'on y croit.\nMême étreinte on l'aperçoit.\nQui est-elle ?"
+        reponse: étoile
+    1 :
+        enigme: "Bien des vêtements y défilent,\nElle est propice aux coups de fil,\nParfois conçue pour piloter.\nSur le Fort, elle est abandonnée.\nQui est-elle ?"
+        reponse: cabine
+    2 :
+        enigme: "Sujette à l'emballement,\nElle vit en bande assurément,\nCette personne très protégée,\nEst une curiosité dans les musées.\nQui est-elle ?"
+        reponse: momie
+    2 :
+        enigme: "Qualité surnaturelle,\nPour le commun des mortels.\nElle est l'apanage des Dieux tel Jupiter,\nEt des grands Hommes en habits verts.\nQui est-elle ?"
+        reponse: immortalité

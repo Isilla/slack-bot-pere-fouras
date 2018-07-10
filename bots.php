@@ -4,30 +4,15 @@ require_once('vendor/autoload.php');
 class bots {
     private $responseEnigme;
     private $enigmes;
+    private $nopeResponses;
 
     public function __construct()
     {
         $this->responseEnigme = [];
-        $this->enigmes = [
-            0 => [
-                'enigme' => '
-Echelon suprême à l\'Opéra
-Jamais sous l\'eau elle ne fila.
-Bonne lorsqu\'on y croit.
-Même étreinte on l\'aperçoit.
-Qui est-elle ?',
-                'reponse' => 'étoile'
-            ],
-            1 => [
-                'enigme' => '
-Bien des vêtements y défilent,
-Elle est propice aux coups de fil,
-Parfois conçue pour piloter.
-Sur le Fort, elle est abandonnée.
-Qui est-elle ?',
-                'reponse' => 'cabine'
-            ],
-        ];
+
+        $yml  = \Symfony\Component\Yaml\Yaml::parseFile('enigmes.yml');
+        $this->enigmes = $yml['enigmes'];
+        $this->nopeResponses = $yml['nope'];
     }
 
     public function process(){
@@ -53,22 +38,21 @@ Qui est-elle ?',
                 if($this->responseEnigme[$channelId] != null) {
                     if(preg_match('/(.*)(' . $this->responseEnigme[$channelId] . ')(.*)/', strtolower($data['text']))) {
                         $message = $client->getMessageBuilder()
-                            ->setText('Bravo !
-https://thumbs.gfycat.com/LastingSmallAnt-max-1mb.gif')
+                            ->setText('Bravo ! Voici la clé :key:')
                             ->setChannel($channel)
                             ->create();
                         $this->responseEnigme[$channelId] = null;
                     } else {
+                        $numberNope = rand(0, count($this->nopeResponses)-1);
                         $message = $client->getMessageBuilder()
-                            ->setText('Nope !')
+                            ->setText($this->nopeResponses[$numberNope])
                             ->setChannel($channel)
                             ->create();
                     }
                 }
 
 
-
-                if(strtolower($data['text']) == 'enigme') {
+                if(strtolower($data['text']) == 'énigme') {
                     $number = rand(0, count($this->enigmes)-1);
                     $message = $client->getMessageBuilder()
                         ->setText('Voici l\'énigme : 
@@ -81,7 +65,7 @@ https://thumbs.gfycat.com/LastingSmallAnt-max-1mb.gif')
 
                 if($message === null) {
                     $message = $client->getMessageBuilder()
-                        ->setText('Si tu veux jouer, saisie `enigme`')
+                        ->setText('Bonjour visiteur, si tu veux jouer, saisie `énigme`')
                         ->setChannel($channel)
                         ->create();
                 }
